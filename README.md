@@ -7,7 +7,7 @@ docker build `directory`
 
 ## Build + multiple tag (latest + version)
 ```
-docker build 8 -t beninho/php:8.0
+docker build 8.0 -t beninho/php:8.0
 ```
 ou
 ```
