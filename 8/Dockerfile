@@ -1,4 +1,6 @@
-FROM php:8.1-fpm
+ARG PHP_VERSION=8.0
+
+FROM php:${PHP_VERSION}-fpm
 
 ARG PICKLE_EXTENSIONS
 
@@ -23,7 +25,6 @@ RUN apt-get update \
     # oniguruma not bundled in php, use libonig: https://www.php.net/manual/en/migration74.other-changes.php
     libonig-dev \
     libxslt1-dev \
-    pdftk \
   && rm -rf /var/lib/apt/lists/* \
   && dpkg-reconfigure -f noninteractive locales \
   && echo 'en_US.UTF-8 UTF-8' > /etc/locale.gen \

@@ -1,9 +1,8 @@
-FROM php:7.4-fpm
+ARG PHP_VERSION=8.0
 
-ENV XDEBUG_MODE off
+FROM php:${PHP_VERSION}-fpm
 
-# Xdebug: remote step debugging port
-EXPOSE 9003
+ARG PICKLE_EXTENSIONS
 
 RUN apt-get update \
   && apt-get full-upgrade -y \
@@ -23,10 +22,10 @@ RUN apt-get update \
     libxml2-dev \
     libwebp-dev \
     libmagickwand-dev \
-    zlib1g-dev \
-    curl \
     # oniguruma not bundled in php, use libonig: https://www.php.net/manual/en/migration74.other-changes.php
     libonig-dev \
+    libxslt1-dev \
+    pdftk \
   && rm -rf /var/lib/apt/lists/* \
   && dpkg-reconfigure -f noninteractive locales \
   && echo 'en_US.UTF-8 UTF-8' > /etc/locale.gen \
@@ -35,25 +34,22 @@ RUN apt-get update \
 
 # migrating to pkg-config: https://www.php.net/manual/en/migration74.other-changes.php#migration74.other-changes.pkg-config
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
-  && docker-php-ext-install -j$(nproc) intl gd opcache mbstring zip pdo_mysql soap mysqli exif gettext bcmath
+  && docker-php-ext-install -j$(nproc) intl gd opcache mbstring zip pdo_mysql mysqli soap exif xsl
 
-# PECL modules
-RUN pecl install imagick && docker-php-ext-enable imagick
-RUN pecl install memcached && docker-php-ext-enable memcached
-RUN pecl install apcu && docker-php-ext-enable apcu
-RUN pecl install ssh2-1.2 && docker-php-ext-enable ssh2
-RUN pecl install xdebug && docker-php-ext-enable xdebug
+# Extra extensions using pickle: https://github.com/docker-library/php/pull/840#issuecomment-502251019
+ADD https://github.com/FriendsOfPHP/pickle/releases/download/v0.7.7/pickle.phar /usr/local/bin/pickle
+ENV PICKLE_EXTENSIONS=${PICKLE_EXTENSIONS:-"apcu memcached imagick xdebug"}
+RUN chmod +x /usr/local/bin/pickle && \
+  ( \
+    for extension in $PICKLE_EXTENSIONS; do \
+      pickle install -n $extension; \
+      docker-php-ext-enable $extension; \
+    done \
+  )
 
 # Install Composer
 ENV COMPOSER_ALLOW_SUPERUSER 1
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
-
-# Install Blackfire
-RUN export VERSION=`php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;"` \
-  && curl -A "Docker" -o /tmp/blackfire-probe.tar.gz -D - -L -s https://blackfire.io/api/v1/releases/probe/php/linux/amd64/${VERSION} \
-  && tar zxpf /tmp/blackfire-probe.tar.gz -C /tmp \
-  && mv /tmp/blackfire-*.so `php -r "echo ini_get('extension_dir');"`/blackfire.so \
-  && echo "extension=blackfire.so\nblackfire.agent_socket=tcp://blackfire:8707" > $PHP_INI_DIR/conf.d/blackfire.ini
 
 RUN usermod -u 1000 www-data
 RUN usermod -G staff www-data

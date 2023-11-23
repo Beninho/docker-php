@@ -7,11 +7,15 @@ docker build `directory`
 
 ## Build + multiple tag (latest + version)
 ```
-docker build 8.0 -t beninho/php:8.0
+docker build 8 --build-arg PHP_VERSION=8.0 -t beninho/php:8.0
 ```
 ou
 ```
-docker build 8.1 -t beninho/php:latest -t beninho/php:8.1
+docker build 8 --build-arg PHP_VERSION=8.1 -t beninho/php:8.1
+```
+ou
+```
+docker build 8 --build-arg PHP_VERSION=8.2 -t beninho/php:8.2 -t beninho/php:latest
 ```
 
 ## Login sur docker Hub
