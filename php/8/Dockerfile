@@ -58,3 +58,5 @@ WORKDIR /var/www/symfony
 # Config
 COPY symfony.ini $PHP_INI_DIR/conf.d/
 COPY symfony.pool.conf $PHP_INI_DIR/pool.d/
+COPY xdebug.ini $PHP_INI_DIR/conf.d/99-custom-xdebug.ini
+COPY blackfire.ini $PHP_INI_DIR/conf.d/99-custom-blackfire.ini
