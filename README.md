@@ -1,51 +1,60 @@
 # Docker Images
 
-## PHP 🐘
+## 🐘 PHP - See on [DockerHub](https://hub.docker.com/r/beninho/php/tags)
 
 ### Versions available:
 
-    - PHP :
+#### Deprecated
 
-[https://hub.docker.com/r/beninho/php/tags]
+- 7.4
+- 8.1 pdftk
 
-Sources to build php 7.4, 8.0, 8.1, 8.2, 8.3
+#### Active
+
+- 8.0
+- 8.1
+- 8.2
+- 8.3
+
+
+
+## 🪶 Apache
+
+### Versions available:
+
+- 2.4
+
+
+
+## 🛟 HOW TO
 
 ### Build image docker
-```
-docker build `directory`
-```
 
-### Build + multiple tag (latest + version)
 ```
-docker build 8 --build-arg PHP_VERSION=8.0 -t beninho/php:8.0
-```
-ou
-```
-docker build 8 --build-arg PHP_VERSION=8.1 -t beninho/php:8.1
-```
-ou
-```
-docker build 8 --build-arg PHP_VERSION=8.2 -t beninho/php:8.2
-```
-ou
-```
-docker build 8 --build-arg PHP_VERSION=8.3 -t beninho/php:8.3 -t beninho/php:latest
+docker build `directory` -t `tagname`
 ```
 
 ### Login on docker Hub
+
 ```
 docker login
 ```
 
 ### Push tag on dockerhub
+
 ```
-docker push beninho/php:latest
-```
-```
-docker push beninho/php:8.0
-```
-```
-docker push beninho/php:8.1
+docker push `tagname`
 ```
 
-## 🪶 Apache
+### Use in your `docker-compose.yml`
+
+```yaml
+services:
+    php:
+        image: beninho/php:8.3
+        
+    web:
+        image: beninho/httpd:2.4
+        ports:
+            - "80:80"
+```
