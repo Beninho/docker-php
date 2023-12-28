@@ -43,7 +43,7 @@ push_pdftk:
 
 ## === 🪶 Apache ==============================================
 
-#build_apache: #Doc: Build Apache 2.4
+build_apache: #Doc: Build Apache 2.4
 	docker build httpd/2.4 -t beninho/httpd:2.4 -t beninho/apache:2.4
 
 push_apache: #Doc: Push image apache on DockerHub

@@ -26,5 +26,6 @@ LoadModule proxy_fcgi_module modules/mod_proxy_fcgi.so
     </Directory>
 
     ErrorLog {{ $APACHE_LOG_DIR }}/{{ $APACHE_LOG_PREFIX }}_error.log
-    CustomLog /proc/self/fd/1 combined
+    LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"" combined
+    CustomLog {{ $APACHE_LOG_DIR }}/{{ $APACHE_LOG_PREFIX }}_access.log combined
 </VirtualHost>
