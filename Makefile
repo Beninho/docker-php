@@ -18,6 +18,9 @@ build_82: #Doc: Build and Tag 8.2
 build_83: #Doc: Build and Tag 8.3 (Latest)
 	docker build php/8 --build-arg PHP_VERSION=8.3 -t beninho/php:8.3 -t beninho/php:latest
 
+build_pcov: #Doc: Build and Tag 8.3 with pcov
+	docker build php/8-pcov --build-arg PHP_VERSION=8.3 -t beninho/php:8.3-pcov
+
 build_pdftk: #Doc: Build PDFTK 8.1
 	docker build php/8-pdftk --build-arg PHP_VERSION=8.1 -t beninho/php:8.1-pdftk
 
@@ -39,7 +42,8 @@ push_latest: #Doc: Push image latest on DockerHub
 push_pdftk:
 	docker push beninho/php:8.1-pdftk
 
-
+push_pcov:
+	docker push beninho/php:8.3-pcov
 
 ## === 🪶 Apache ==============================================
 
