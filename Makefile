@@ -2,7 +2,7 @@
 login: #Doc: Login on DockerHub
 	docker login
 
-push_all: push_80 push_81 push_82 push_83 push_pdftk push_latest push_apache #Doc: Push all images on Dockerhub
+push_all: push_80 push_81 push_82 push_83 push_latest push_apache #Doc: Push all images on Dockerhub
 
 ## === 🐘 PHP =================================================
 
@@ -21,9 +21,6 @@ build_83: #Doc: Build and Tag 8.3 (Latest)
 build_pcov: #Doc: Build and Tag 8.3 with pcov
 	docker build php/8-pcov --build-arg PHP_VERSION=8.3 -t beninho/php:8.3-pcov
 
-build_pdftk: #Doc: Build PDFTK 8.1
-	docker build php/8-pdftk --build-arg PHP_VERSION=8.1 -t beninho/php:8.1-pdftk
-
 push_80: #Doc: Push image 8.0 on DockerHub
 	docker push beninho/php:8.0
 
@@ -38,9 +35,6 @@ push_83: #Doc: Push image 8.3 on DockerHub
 
 push_latest: #Doc: Push image latest on DockerHub
 	docker push beninho/php:latest
-
-push_pdftk:
-	docker push beninho/php:8.1-pdftk
 
 push_pcov:
 	docker push beninho/php:8.3-pcov

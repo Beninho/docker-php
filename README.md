@@ -4,17 +4,13 @@
 
 ### Versions available:
 
-#### Deprecated
-
-- 7.4
-- 8.1 pdftk
-
 #### Active
 
 - 8.0
 - 8.1
 - 8.2
 - 8.3
+- 8.3 with pcov enabled
 
 
 
