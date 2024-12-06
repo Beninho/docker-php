@@ -47,7 +47,7 @@ RUN chmod +x /usr/local/bin/pickle && \
   )
 
 # Install Composer
-ENV COMPOSER_ALLOW_SUPERUSER 1
+ENV COMPOSER_ALLOW_SUPERUSER=1
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 
 RUN usermod -u 1000 www-data
