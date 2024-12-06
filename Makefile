@@ -2,7 +2,7 @@
 login: #Doc: Login on DockerHub
 	docker login
 
-push_all: push_80 push_81 push_82 push_83 push_latest push_apache #Doc: Push all images on Dockerhub
+push_all: push_all_php push_apache #Doc: Push all images on Dockerhub
 
 ## === 🐘 PHP =================================================
 
@@ -38,6 +38,9 @@ push_latest: #Doc: Push image latest on DockerHub
 
 push_pcov:
 	docker push beninho/php:8.3-pcov
+
+push_all_php: #Doc: Push all PHP images on Dockerhub
+	docker image push --all-tags beninho/php
 
 ## === 🪶 Apache ==============================================
 
