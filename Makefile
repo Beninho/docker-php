@@ -15,11 +15,17 @@ build_81: #Doc: Build and Tag 8.1
 build_82: #Doc: Build and Tag 8.2
 	docker build php/8 --build-arg PHP_VERSION=8.2 -t beninho/php:8.2
 
-build_83: #Doc: Build and Tag 8.3 (Latest)
-	docker build php/8 --build-arg PHP_VERSION=8.3 -t beninho/php:8.3 -t beninho/php:latest
+build_83: #Doc: Build and Tag 8.3
+	docker build php/8 --build-arg PHP_VERSION=8.3 -t beninho/php:8.3
 
-build_pcov: #Doc: Build and Tag 8.3 with pcov
+build_84: #Doc: Build and Tag 8.3 (Latest)
+	docker build php/8 --build-arg PHP_VERSION=8.4 -t beninho/php:8.4 -t beninho/php:latest
+
+build_pcov83: #Doc: Build and Tag 8.3 with pcov
 	docker build php/8-pcov --build-arg PHP_VERSION=8.3 -t beninho/php:8.3-pcov
+
+build_pcov84: #Doc: Build and Tag 8.4 with pcov
+	docker build php/8-pcov --build-arg PHP_VERSION=8.4 -t beninho/php:8.4-pcov
 
 push_80: #Doc: Push image 8.0 on DockerHub
 	docker push beninho/php:8.0
@@ -33,11 +39,14 @@ push_82: #Doc: Push image 8.2 on DockerHub
 push_83: #Doc: Push image 8.3 on DockerHub
 	docker push beninho/php:8.3
 
+push_84: #Doc: Push image 8.4 on DockerHub
+	docker push beninho/php:8.4
+
 push_latest: #Doc: Push image latest on DockerHub
 	docker push beninho/php:latest
 
 push_pcov:
-	docker push beninho/php:8.3-pcov
+	docker push beninho/php:8.3-pcov beninho/php:8.4-pcov
 
 push_all_php: #Doc: Push all PHP images on Dockerhub
 	docker image push --all-tags beninho/php
